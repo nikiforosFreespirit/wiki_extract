@@ -1,0 +1,26 @@
+body {
+   margin : 5px; padding : 5px;
+   font-family : georgia, times, serif;
+   font-size : 15px;
+}
+
+div {
+   margin : 0; padding : 0;
+}
+
+#contents {
+	padding: 12px;
+  font-family: arial, monospace;
+  font-size: 12pt;
+}
+
+#topicInfo {
+  padding: 10px;
+  padding-left: 12px;
+}
+
+#banner {
+	width: 100%;
+	height: 250px;
+	background: url("naples_banner.jpg") center no-repeat;
+}

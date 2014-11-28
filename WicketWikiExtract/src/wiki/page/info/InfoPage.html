@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Information page</title>
+<!--link href="style.css" rel="stylesheet"/-->
+<link href="infoPageStyle.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div id="banner"></div>
+
+
+<div wicket:id="contents" id="contents">
+  <p>
+    <a wicket:id="showhide">
+      <wicket:container wicket:id="topicName" />
+    </a>
+    <div wicket:id="topicInfo" id="topicInfo">Place for Wikivoyage text</div>
+  </p>
+
+  <wicket:remove>
+  <p>
+    <a>Place for topic name</a>
+    <div id="topicInfo">Place for Wikivoyage text</div>
+  </p>
+  <p>
+    <a>Place for topic name</a>
+    <div id="topicInfo">Place for Wikivoyage text</div>
+  </p>
+  </wicket:remove>
+</div>
+
+</body>
+</html>
