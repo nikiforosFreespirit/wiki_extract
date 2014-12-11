@@ -1,33 +1,35 @@
 package wiki.page.info.components;
 
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 
-public class TopicView extends ListView<Entry<?, String>> {
+public class TopicView extends ListView<String> {
 
-	private final InformationContent contentMap;
+	final MapInformationContent contentMap;
 
 	/**
      *
      */
 	private static final long serialVersionUID = 8672723938411338756L;
 	
-	public TopicView(String id, List<? extends Entry<?, String>> list) {
-		super(id, list);
-		this.contentMap = new InformationContent(list);
+	public TopicView(String id, List<String> keyList, MapInformationContent contentMap) {
+		super(id, keyList);
+		this.contentMap = contentMap;
 	}
 
 	@Override
-	protected void populateItem(ListItem<Entry<?, String>> item) {
-		Entry<?, String> topic = item.getModelObject();
-		
-		String topicName = topic.getKey().toString();
-		ShowTopicLink showTopicLink = contentMap.findLink(topicName);
+	protected void populateItem(ListItem<String> item) {
+		String topicName = item.getModelObject();
+		ShowTopicLink showTopicLink = contentMap.findEntry(topicName).getKey();
+		TopicLabel contentLabel = contentMap.findEntry(topicName).getValue();
 		
 		item.add(showTopicLink);
-		item.add(showTopicLink.associatedContent);
+		item.add(contentLabel);
+	}
+
+	final MapInformationContent getContentMap() {
+		return contentMap;
 	}
 }
