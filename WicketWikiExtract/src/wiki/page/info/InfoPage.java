@@ -2,7 +2,8 @@ package wiki.page.info;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -11,6 +12,7 @@ import wiki.info.converter.dom.AbstractPageDOM;
 import wiki.info.extractor.WikiVoyageExtractor;
 import wiki.info.retriever.input.BaseRetrieverInputData;
 import wiki.info.retriever.input.RedirectRetrieverInputData;
+import wiki.page.info.components.MapInformationContent;
 import wiki.page.info.components.TopicView;
 
 public class InfoPage extends WebPage {
@@ -24,15 +26,16 @@ public class InfoPage extends WebPage {
 
 	public InfoPage(String location) {
 
-		TreeMap<?, String> contentMap = requestContentToDisplay(location);
-		List<Entry<?, String>> contentList = convertContentToEntryList(contentMap);
-		add(new TopicView("contents", contentList));
+		Map<?, String> contentMap = requestContentToDisplay(location);
+		add(new TopicView("contents", transformTopicSet(contentMap.keySet()),
+				new MapInformationContent(contentMap)));
 	}
 
-	private List<Entry<?, String>> convertContentToEntryList(
-			TreeMap<?, String> contentMap) {
-		List<Entry<?, String>> contentList = new ArrayList<Entry<?, String>>();
-		contentList.addAll(contentMap.entrySet());
+	private List<String> transformTopicSet(Set<?> keySet) {
+		List<String> contentList = new ArrayList<String>();
+		for (Object topic : keySet) {
+			contentList.add(topic.toString());
+		}
 		return contentList;
 	}
 

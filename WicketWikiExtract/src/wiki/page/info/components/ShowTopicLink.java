@@ -2,6 +2,7 @@ package wiki.page.info.components;
 
 import java.util.Map.Entry;
 
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 
@@ -9,7 +10,6 @@ final class ShowTopicLink extends Link<String> {
 
 	private static final String TOPIC_NAME_KEY = "topicName";
 	final String linkLabelName;
-	final TopicLabel associatedContent;
 
 	/**
      *
@@ -20,30 +20,32 @@ final class ShowTopicLink extends Link<String> {
 		super(id);
 
 		// "value": topic content
-		TopicLabel contentLabel = new TopicLabel("topicInfo",
-				linkPlusContent.getValue());
+//		TopicLabel contentLabel = new TopicLabel("topicInfo",
+//				linkPlusContent.getValue());
 
 		// "key": on/off link
 		this.linkLabelName = linkPlusContent.getKey().toString();
 		Label linkLabel = new Label(TOPIC_NAME_KEY, this.linkLabelName);
 		this.add(linkLabel);
 
-		this.associatedContent = contentLabel;
+//		this.associatedContent = contentLabel;
 	}
 
 	@Override
 	public void onClick() {
-		associatedContent.setVisible(!associatedContent.isVisible());
+//		associatedContent.setVisible(!associatedContent.isVisible());
+		MarkupContainer topicViewAncestor = this.getParent().getParent();
+		if(topicViewAncestor != null && topicViewAncestor instanceof TopicView) {
+			TopicView parent = (TopicView) topicViewAncestor;
+			TopicLabel label = parent.contentMap.contents.get(linkLabelName).getValue();
+			label.setVisible(!label.isVisible());
+		}
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((associatedContent == null) ? 0 : associatedContent
-						.hashCode());
 		result = prime * result
 				+ ((linkLabelName == null) ? 0 : linkLabelName.hashCode());
 		return result;
@@ -58,11 +60,6 @@ final class ShowTopicLink extends Link<String> {
 		if (getClass() != obj.getClass())
 			return false;
 		ShowTopicLink other = (ShowTopicLink) obj;
-		if (associatedContent == null) {
-			if (other.associatedContent != null)
-				return false;
-		} else if (!associatedContent.equals(other.associatedContent))
-			return false;
 		if (linkLabelName == null) {
 			if (other.linkLabelName != null)
 				return false;
